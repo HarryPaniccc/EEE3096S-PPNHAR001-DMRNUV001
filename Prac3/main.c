@@ -51,7 +51,7 @@ uint32_t curr_millis = 0;
 uint32_t delay_t = 500; // Initialise delay to 500ms
 uint32_t adc_val;
 char dum_char;
-
+uint32_t prevtick = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -350,6 +350,7 @@ static void MX_GPIO_Init(void)
 void EXTI0_1_IRQHandler(void)
 {
 	// TODO: Add code to switch LED7 delay frequency
+if (HAL_GetTick()> prevtick+500) {
 	
 	if (delay_t == 500){
 
@@ -363,8 +364,8 @@ void EXTI0_1_IRQHandler(void)
 	}
 
 
-
-
+	prevtick = HAL_GetTick();
+}
   
 	HAL_GPIO_EXTI_IRQHandler(Button0_Pin); // Clear interrupt flags
 }
